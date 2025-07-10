@@ -43,9 +43,9 @@
 
 ## Screenshots
 
-![Home Page](screenshots/home.png)
-![Chatbot](screenshots/chatbot.png)
-![Risk Analysis](screenshots/risk_analysis.png)
+![Home Page](<img width="1919" height="1034" alt="image" src="https://github.com/user-attachments/assets/d1d6309f-5e4e-4e58-b9a9-8ae7bd4cb337" />)
+![Risk Analysis](<img width="1906" height="983" alt="image" src="https://github.com/user-attachments/assets/d1d317ea-f802-491d-8e2d-bec1883a215a" />)
+![Chatbot](<img width="1911" height="994" alt="image" src="https://github.com/user-attachments/assets/44af9f81-284e-4ffc-8f6c-4e90d98a2a46" />)
 
 ## License
 
