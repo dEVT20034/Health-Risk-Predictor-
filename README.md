@@ -26,7 +26,7 @@
 
 1. **Clone the repository:**
     ```bash
-    git clone https://github.com/YOUR-USERNAME/health-risk-predictor.git
+    git clone https://github.com/dEVT20034/health-risk-predictor.git
     cd health-risk-predictor
     ```
 
