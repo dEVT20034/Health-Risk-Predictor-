@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Health Risk Predictor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+  <style>
+    body {
+      background-color: #f0f9ff;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .navbar {
+      background-color: #ffffff;
+    }
+    .hero {
+      background: linear-gradient(to right, #e3f2fd, #bbdefb);
+      padding: 100px 20px;
+      text-align: center;
+      border-radius: 10px;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      color: #0077b6;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      color: #333;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .btn-start {
+      background-color: #0288d1;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 30px;
+      font-weight: bold;
+      margin-top: 30px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+    .btn-start:hover {
+      background-color: #01579b;
+      color: white;
+    }
+    .section {
+      margin-top: 80px;
+    }
+    footer {
+      text-align: center;
+      margin-top: 80px;
+      padding: 20px;
+      background-color: #e0f2f1;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg shadow-sm">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#">HealthPredict</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navContent">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="/predict">Start Prediction</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <div class="container mt-5">
+    <div class="hero">
+      <h1>Predict Your Health Risk</h1>
+      <p>
+        Use AI and medical data to analyze your lifestyle and discover your risk for diseases like diabetes or heart conditions.
+        Get health insights and actionable tips instantly.
+      </p>
+      <a href="/predict" class="btn btn-start">Start Prediction</a>
+    </div>
+
+    <!-- About Section -->
+    <div id="about" class="section text-center">
+      <h3 class="mb-3">About the App</h3>
+      <p class="w-75 mx-auto">
+        HealthPredict is a research-backed AI-powered tool that helps you understand your risk for chronic diseases using
+        parameters like glucose level, blood pressure, BMI, age, and lifestyle habits (activity, smoking).
+        It gives you immediate insights and personalized health recommendations based on your data.
+      </p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Dev Ashish Trivedi | Health Risk Predictor | All rights reserved
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Health Chatbot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+  body {
+    background: linear-gradient(135deg, #e3f2fd 0%, #f8fafc 100%);
+    margin: 0;
+    min-height: 100vh;
+  }
+  .chat-container {
+    max-width: 480px;
+    margin: 24px auto;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(2,136,209,0.10);
+    padding: 18px 12px 24px 12px;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  .chat-title {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #0288d1;
+    margin-bottom: 18px;
+    text-align: center;
+    letter-spacing: 0.5px;
+  }
+  .chat-area {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 180px;
+    margin-bottom: 16px;
+    width: 100%;
+  }
+  .chat-bubble {
+    border-radius: 12px;
+    padding: 13px 16px;
+    margin-bottom: 0;
+    max-width: 95%;
+    word-break: break-word;
+    font-size: 1rem;
+    box-shadow: 0 2px 8px rgba(2,136,209,0.04);
+    line-height: 1.5;
+  }
+  .chat-bubble.user {
+    background: #e3f2fd;
+    align-self: flex-end;
+    margin-left: auto;
+    color: #222;
+  }
+  .chat-bubble.bot {
+    background: #e8f5e9;
+    align-self: flex-start;
+    margin-right: auto;
+    color: #1b5e20;
+  }
+  .chat-bubble.risk {
+    background: #fffde7;
+    border: 1px solid #ffe082;
+    color: #795548;
+    font-size: 1.02rem;
+  }
+  .input-area {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+    border-radius: 14px;
+    padding: 6px 8px;
+    background: #f1f8fe;
+    border: 1.5px solid #b0bec5;
+    width: 100%;
+    box-shadow: 0 1px 4px rgba(2,136,209,0.04);
+  }
+  .input-area input {
+    border: none;
+    outline: none;
+    background: transparent;
+    flex: 1;
+    font-size: 1.05rem;
+    color: #222;
+    font-weight: 500;
+    padding: 6px 2px;
+  }
+  .input-area input::placeholder {
+    color: #888;
+    opacity: 1;
+    font-weight: 400;
+  }
+  .btn-pill {
+    border-radius: 22px !important;
+    padding: 8px 22px;
+    font-weight: 600;
+    min-width: 80px;
+    font-size: 1.05rem;
+    box-shadow: 0 2px 8px rgba(2,136,209,0.06);
+    transition: background 0.2s;
+  }
+  .btn-pill:active {
+    background: #01579b !important;
+  }
+  .btn-risk {
+    width: 100%;
+    margin-top: 8px;
+    border-radius: 22px;
+    font-weight: 600;
+    min-height: 44px;
+    font-size: 1.08rem;
+    background: #ffd600;
+    color: #222;
+    border: none;
+    box-shadow: 0 2px 8px rgba(255,214,0,0.08);
+    transition: background 0.2s;
+  }
+  .btn-risk:active {
+    background: #ffb300;
+  }
+  .text-center { text-align: center; }
+  .btn-outline-primary.btn-pill {
+    border-radius: 22px !important;
+    font-weight: 600;
+    font-size: 1.05rem;
+    margin-top: 10px;
+  }
+  @media (max-width: 600px) {
+    .chat-container {
+      padding: 6vw 2vw 8vw 2vw;
+      margin: 0;
+      border-radius: 0;
+      min-height: 100vh;
+      max-width: 100vw;
+    }
+    .chat-title { font-size: 1.15rem; }
+    .input-area { flex-direction: column; gap: 6px; padding: 6px 6px; }
+    .btn-pill, .btn-risk { width: 100%; padding-left: 0; padding-right: 0; }
+    .chat-bubble { font-size: 0.98rem; padding: 11px 8px; }
+  }
+  @media (max-width: 400px) {
+    .chat-title { font-size: 1rem; }
+    .chat-bubble { font-size: 0.9rem; }
+    .chat-container { padding: 2vw 0; }
+  }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-title">AI Health Chatbot</div>
+    <div id="chat" class="chat-area"></div>
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="Ask about your symptoms (e.g., I have a cough and fever)">
+      <button class="btn btn-primary btn-pill" onclick="askChatbot()">Ask</button>
+    </div>
+    <button class="btn btn-warning btn-risk" onclick="showRisk()">Show My Risk Analysis</button>
+    <div class="text-center mt-3">
+      <button class="btn btn-outline-primary btn-pill" onclick="window.location.href='/predict'">Try Again</button>
+    </div>
+  </div>
+  <script>
+    let chatHistory = [];
+
+    function renderChat() {
+      const chatDiv = document.getElementById("chat");
+      chatDiv.innerHTML = "";
+      chatHistory.forEach(msg => {
+        let bubbleClass = "chat-bubble";
+        if (msg.type === "user") bubbleClass += " user";
+        else if (msg.type === "bot") bubbleClass += " bot";
+        else if (msg.type === "risk") bubbleClass += " risk";
+        chatDiv.innerHTML += `<div class="${bubbleClass}">${msg.text}</div>`;
+      });
+      chatDiv.scrollTop = chatDiv.scrollHeight;
+    }
+
+    function askChatbot() {
+      const input = document.getElementById("userInput");
+      const question = input.value.trim();
+      if (!question) return;
+      chatHistory.push({ type: "user", text: "You: " + question });
+      renderChat();
+      chatHistory.push({ type: "bot", text: "Analyzing..." });
+      renderChat();
+      fetch("/chatbot", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question })
+      })
+      .then(res => res.json())
+      .then(data => {
+        chatHistory.pop(); // Remove "Analyzing..."
+        chatHistory.push({
+          type: "bot",
+          text: `<strong>Diagnosis:</strong> ${data.diagnosis}<br><strong>Suggestion:</strong> ${data.suggestion}`
+        });
+        renderChat();
+      });
+      input.value = "";
+    }
+
+    function showRisk() {
+      const healthData = JSON.parse(localStorage.getItem("healthData") || "{}");
+      if (!healthData.age) {
+        chatHistory.push({ type: "risk", text: "No health data found. Please fill the form first." });
+        renderChat();
+        return;
+      }
+      chatHistory.push({ type: "risk", text: "Analyzing your health risk..." });
+      renderChat();
+      fetch("/chatbot", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(healthData)
+      })
+      .then(res => res.json())
+      .then(data => {
+        chatHistory.pop(); // Remove "Analyzing..."
+        chatHistory.push({
+          type: "risk",
+          text: `<strong>Your Health Risk:</strong><br>${data.diagnosis}<br><br><strong>What you can do:</strong><br>${data.suggestion}`
+        });
+        renderChat();
+      });
+    }
+
+    // On load, show risk analysis if healthData exists
+    window.onload = function() {
+      chatHistory = [];
+      showRisk();
+    };
+  </script>
+</body>
+</html>

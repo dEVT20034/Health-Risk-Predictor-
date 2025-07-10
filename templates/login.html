@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Page</title>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background: #f3f4f6;
+    }
+
+    .form {
+      background-color: white;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      width: 380px;
+    }
+
+    .form label {
+      font-weight: bold;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .inputForm {
+      position: relative;
+      display: flex;
+      align-items: center;
+      border: 1px solid #ccc;
+      padding: 10px 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      background-color: #fff;
+    }
+
+    .inputForm svg.icon {
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+
+    .inputForm .eye-icon {
+      position: absolute;
+      right: 12px;
+      font-size: 18px;
+      cursor: pointer;
+      display: none;
+    }
+
+    .input {
+      border: none;
+      outline: none;
+      flex: 1;
+      font-size: 15px;
+      background-color: transparent;
+    }
+
+    .flex-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    .button-submit {
+      width: 100%;
+      background-color: black;
+      color: white;
+      padding: 14px 0;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    .p {
+      text-align: center;
+      margin: 10px 0;
+      font-size: 14px;
+    }
+
+    .p.line {
+      display: flex;
+      align-items: center;
+      text-align: center;
+    }
+
+    .p.line::before, .p.line::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .p.line:not(:empty)::before {
+      margin-right: .75em;
+    }
+
+    .p.line:not(:empty)::after {
+      margin-left: .75em;
+    }
+
+    .social-btns {
+      display: flex;
+      justify-content: center;
+      margin-top: 12px;
+    }
+
+    .span {
+      color: #2563eb;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <form class="form" onsubmit="event.preventDefault(); window.location.href = 'index.html';">
+    <div>
+      <label>Email</label>
+      <div class="inputForm">
+        <svg class="icon" height="20" viewBox="0 0 512 512" width="20" xmlns="http://www.w3.org/2000/svg">
+          <path d="M502.3 190.8L327.4 338c-15.6 12.8-38.1 12.8-53.7 0L9.7 190.8C3.9 186.4 0 179.9 0 172.8c0-21.4 25.9-33.1 43-19.8L256 320l213-167c17.1-13.4 43 1.5 43 19.8 0 7.1-3.9 13.6-9.7 18z"/>
+        </svg>
+        <input type="email" class="input" placeholder="Enter your Email" required>
+      </div>
+    </div>
+
+    <div>
+      <label>Password</label>
+      <div class="inputForm">
+        <svg class="icon" height="20" viewBox="0 0 448 512" width="20" xmlns="http://www.w3.org/2000/svg">
+          <path d="M400 192h-24V128C376 57.3 318.7 0 248 0S120 57.3 120 128v64H96c-26.5 0-48 21.5-48 48v224c0 
+                   26.5 21.5 48 48 48h304c26.5 0 48-21.5 48-48V240c0-26.5-21.5-48-48-48zM168 128c0-44.1 
+                   35.9-80 80-80s80 35.9 80 80v64H168v-64z"/>
+        </svg>
+        <input type="password" class="input" id="passwordInput" placeholder="Enter your Password" required>
+        <span class="eye-icon" id="eyeToggle">👁️</span>
+      </div>
+    </div>
+
+    <div class="flex-row">
+      <label><input type="checkbox"> Remember me</label>
+      <a href="#" class="span">Forgot password?</a>
+    </div>
+
+    <button class="button-submit">Sign In</button>
+
+    <p class="p">Don't have an account? <a href="register.html" class="span">Sign Up</a></p>
+
+    <p class="p line">Or With</p>
+
+    <div class="social-btns">
+      <!-- GOOGLE LOGIN BUTTON -->
+      <div id="g_id_onload"
+           data-client_id="176123918309-mdip4ob1fmkuqbs1ubmutckrmtr7pvpt.apps.googleusercontent.com"
+           data-context="signin"
+           data-callback="handleGoogleLogin"
+           data-auto_prompt="false"
+           data-ux_mode="popup">
+      </div>
+
+      <div class="g_id_signin"
+           data-type="standard"
+           data-shape="rectangular"
+           data-theme="outline"
+           data-text="signin_with"
+           data-size="large"
+           data-logo_alignment="left">
+      </div>
+    </div>
+  </form>
+
+  <script>
+    // Show/hide eye icon
+    const passwordInput = document.getElementById('passwordInput');
+    const eyeToggle = document.getElementById('eyeToggle');
+    passwordInput.addEventListener('input', () => {
+      eyeToggle.style.display = passwordInput.value ? 'block' : 'none';
+    });
+    eyeToggle.addEventListener('click', () => {
+      const isPassword = passwordInput.type === 'password';
+      passwordInput.type = isPassword ? 'text' : 'password';
+    });
+
+    // Google login callback
+    function handleGoogleLogin(response) {
+      const jwt = response.credential;
+      const payload = JSON.parse(atob(jwt.split('.')[1]));
+      alert(`Signed in as: ${payload.name}\nEmail: ${payload.email}`);
+      console.log('Google User Info:', payload);
+    }
+  </script>
+
+</body>
+</html>
